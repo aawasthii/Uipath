@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
-RUN powershell -Command New-Item  -Path "C:\" -ItemType "directory" -Name "C:\UiPath"; \
-    Invoke-WebRequest "https://download.uipath.com/UiPathStudio.msi" -OutFile "C:\UIPathStudio.msi"; \
-    Start-Process "C:\UIPathStudio.msi" -ArgumentList 'ADDLOCAL-DesktopFeature,Robot APPLICATIONFOLDER=C:\UiPath /quiet' -Wait; \
-    Remove-Item "C:\UIPathStudio.msi" -Force
+RUN PowerShell -Command New-Item -Path "C:\\" -ItemType "directory" -Name "UiPath"; \
+    Invoke-WebRequest "https://download.uipath.com/UiPathStudio.msi" -OutFile "C:\\UIPathStudio.msi"; \
+    Start-Process C:\\UIPathStudio.msi -ArgumentList 'ADDLOCAL-DesktopFeature,Robot APPLICATIONFOLDER=C:\\UiPath /quiet' -Wait; \
+    Remove-Item "C:\\UIPathStudio.msi" -Force;
 CMD ["cmd"]
