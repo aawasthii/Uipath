@@ -4,3 +4,14 @@ RUN PowerShell -Command New-Item -Path "C:\\" -ItemType "directory" -Name "UiPat
     Start-Process C:\\UIPathStudio.msi -ArgumentList 'ADDLOCAL-DesktopFeature,Robot APPLICATIONFOLDER=C:\\UiPath /quiet' -Wait; \
     Remove-Item "C:\\UIPathStudio.msi" -Force;
 CMD ["cmd"]
+
+===== cmd and PS=====
+
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+ADD https://download.uipath.com/UiPathStudio.msi C:\\UIPathStudio.msi
+RUN mkdir C:\\UiPath
+RUN C:\\UIPathStudio.msi ADDLOCAL=DesktopFeature,Robot APPLICATIONFOLDER=C:\\UiPath /quiet
+RUN PowerShell -Command Install-PackageProvider -Name NuGet -Force
+RUN PowerShell -Command Register-PSRepository -Name UiPath -SourceLocation https://www.myget.org/F/uipath-dev/api/v2
+RUN PowerShell -Command Install-Module -Repository UiPath -Name UiPath.Powershell -Force
+CMD ["cmd"]
